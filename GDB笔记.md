@@ -82,7 +82,7 @@ endif()
 (gdb) list
 ```
 
-## 添加断点/条件断点
+## 断点
 
 使用``` break ```命令在gdb控制台中为可执行程序添加断点
 
@@ -105,6 +105,48 @@ endif()
 ```shell
 (gdb) break <c file name>.c:<line count> if <var name> == <var value>
 # (gdb) break xxx.c:10 if i == 5
+```
+
+### 移除断点
+
+要移除特定的断点，首先需要知道断点的编号。
+
+```shell
+(gdb) info break<breakpoints>
+```
+
+移除断点
+
+```shell
+(gdb) delete <breakpoint num>
+```
+
+移除所有断点
+
+```shell
+(gdb) delete
+```
+
+### 启用/禁用断点
+
+相比于直接移除断点，还可以禁用断点，这种方式更加灵活。
+
+```shell
+(gdb) info break<breakpoints>
+(gdb) disable <breakpoint num>
+(gdb) enable <breakpoint num>
+```
+
+禁用所有断点
+
+```shell
+(gdb) disable
+```
+
+启用所有断点
+
+```shell
+(gdb) enable
 ```
 
 ## 查看变量
