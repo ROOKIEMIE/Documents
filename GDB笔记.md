@@ -181,6 +181,28 @@ info args
 (gdb) set var myVar=4
 ```
 
+### 监控变量
+
+在某个变量的作用域中设置监控变量
+
+```shell
+(gdb) watch <var name>
+```
+
+或者监控表达式
+
+```shell
+(gdb) watch Struct.member
+```
+
+查看所有监控点
+
+```shell
+(gdb) info watchpoints
+```
+
+与移除断点一样，可以移除监控点
+
 ## 查看线程
 
 ### 列出所有线程
