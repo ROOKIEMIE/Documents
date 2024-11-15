@@ -2028,6 +2028,108 @@ func main() {
 
 
 
+### 网络编程
+
+
+
+在Go语言的网络编程中，`net.Conn`接口用于表示网络连接，我们可以对其进行读写操作。Go标准库提供了多种方法和工具来处理`net.Conn`的读写操作。以下是一些常见的方式和使用示例：
+
+#### 读操作
+
+1. **直接使用`Read`方法**
+
+   - 从连接中读取字节数据到给定的字节切片中。
+
+   ```go
+   func readUsingRead(conn net.Conn) ([]byte, error) {
+       buf := make([]byte, 1024)
+       n, err := conn.Read(buf)
+       if err != nil {
+           return nil, err
+       }
+       return buf[:n], nil
+   }
+   ```
+
+2. **使用`bufio.Reader`**
+
+   - 可以实现按行读取或者缓冲读取，提高读取效率。
+
+   ```go
+   func readUsingBufio(conn net.Conn) (string, error) {
+       reader := bufio.NewReader(conn)
+       line, err := reader.ReadString('\n')
+       if err != nil {
+           return "", err
+       }
+       return line, nil
+   }
+   ```
+
+3. **使用`io.ReadFull`**
+
+   - 确保读取到指定的字节数量，否则返回错误。
+
+   ```go
+   func readUsingReadFull(conn net.Conn) ([]byte, error) {
+       buf := make([]byte, 256) // assume we know the exact number of bytes
+       _, err := io.ReadFull(conn, buf)
+       if err != nil {
+           return nil, err
+       }
+       return buf, nil
+   }
+   ```
+
+#### 写操作
+
+1. **直接使用`Write`方法**
+
+   - 将字节切片写入到连接中。
+
+   ```go
+   func writeUsingWrite(conn net.Conn, data []byte) error {
+       _, err := conn.Write(data)
+       return err
+   }
+   ```
+
+2. **使用`bufio.Writer`**
+
+   - 可以实现缓冲写入，减少对底层连接的写调用次数。
+
+   ```go
+   func writeUsingBufio(conn net.Conn, data string) error {
+       writer := bufio.NewWriter(conn)
+       _, err := writer.WriteString(data + "\n")
+       if err != nil {
+           return err
+       }
+       return writer.Flush() // 确保所有缓冲区数据被写出
+   }
+   ```
+
+3. **使用`io.WriteString`**
+
+   - 直接将字符串写入到连接中（实际上是一种便利函数）。
+
+   ```go
+   func writeUsingIoWriteString(conn net.Conn, data string) error {
+       _, err := io.WriteString(conn, data)
+       return err
+   }
+   ```
+
+#### 读写注意事项
+
+- **缓冲使用**：`bufio`中的缓冲读取和写入在性能上可能更优，尤其是在读取或写入频繁的小数据量时，但是需要注意`Flush`方法对`bufio.Writer`的使用。
+- **错误处理**：每种方法在执行过程中都可能返回错误，生产环境中必须妥善处理这些错误。
+- **同步性**：在`net.Conn`上进行并发的读写操作需要注意同步性问题，通常需要外部加锁或使用其他同步机制。
+
+这些方法可以根据不同的使用场景灵活选择，从而高效地进行网络数据的传输。
+
+
+
 ## 标准库
 
 ### 字符串操作和字节操作官方库
