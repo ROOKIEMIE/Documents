@@ -161,6 +161,33 @@ conda env export > environment.yml
 conda env create -f environment.yml
 ```
 
+---
+
+应确保conda环境中所使用的pip与虚拟环境对应，如下所示：
+
+```bash
+# .bashrc文件中的配置应保证优先使用conda虚拟环境中的pip
+export PATH="$CONDA_PREFIX/bin:$PATH"
+source ~/.bashrc
+# 查看当前所使用的pip所属
+which pip
+# 若使用的是conda虚拟环境中的pip则应会有以下类似的输出
+/home/<username>/miniconda3/envs/virEnv/bin/pip
+# 可以通过以下命令查看当前的所有pip
+which -a pip
+# 若显示的路径并不是虚拟环境相关的路径，则证明当前使用的是全局的pip
+# 调整方法
+# 先通过激活当前虚拟环境，在当前虚拟环境中安装pip
+conda activate virEnv
+conda install pip
+# 通过which命令查看pip安装情况
+which pip
+# 此时应该会出现虚拟环境中的pip
+# 然后通过调整.bashrc文件中的配置并重载该配置实现pip的切换
+```
+
+
+
 ## 从源码安装Python（Linux环境）
 
 **在Ubuntu 18.04-24.04通过测试**
