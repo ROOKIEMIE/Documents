@@ -26,9 +26,144 @@ virtualenv virEnv
 deactivate
 ```
 
+## 使用conda环境
+
+官方安装链接：https://www.anaconda.com/docs/getting-started/miniconda/install
+
+> 创建conda文件夹
+
+```bash
+mkdir miniconda3
+```
+
+> 根据官方步骤下载并运行脚本安装
+
+```bash
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+# rm ~/miniconda3/miniconda.sh
+```
+
+> 调整其中的源配置
+
+```bash
+cp ~/miniconda3/.condarc ~/miniconda3/.condarc.bak
+vim ~/miniconda3/.condarc
+# 替换为以下内容
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch
+  - defaults
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+show_channel_urls: True
+```
+
+> 激活conda
+
+```bash
+source ~/miniconda3/bin/activate
+```
+
+> 初始化conda
+
+```bash
+conda init --all
+```
+
+> 退出conda
+
+```bash
+deactivate
+```
+
+---
+
+**以下操作均是在上述环境的前提下进行**
+
+> 查看当前conda配置
+
+```bash
+conda config --show
+```
+
+这会列出当前 Conda 的所有配置，包括配置的源。
+
+> 创建虚拟环境
+
+```bash
+conda create -n virEnv python=3.x
+```
+
+**注：这里所指定的Python环境需要本地环境中被安装才能成功！！！若本地环境中不存在对应版本的Python环境需现安装。**
+
+> 激活和切换环境
+
+```bash
+conda activate virEnv
+```
+
+> 移除环境
+
+```bash
+conda env remove -n virEnv
+```
+
+> 查看已安装环境
+
+```bash
+conda env list
+```
+
+这条命令会列出所有 Conda 环境，以及当前激活的环境。
+
+> 查询库
+
+```bash
+conda search numpy
+```
+
+> 安装库
+
+```bash
+conda install numpy
+```
+
+> 更新库
+
+```bash
+conda update numpy
+```
+
+> 卸载库
+
+```bash
+conda remove numpy
+```
+
+> 导出环境
+
+```bash
+conda list --explicit > environment.txt
+# 或者使用yml文件作为环境配置
+conda env export > environment.yml
+```
+
+> 导入环境
+
+```bash
+conda env create -f environment.yml
+```
+
 ## 从源码安装Python（Linux环境）
 
-**在Ubuntu 18.04-22.04通过测试**
+**在Ubuntu 18.04-24.04通过测试**
 
 >  **依赖安装**
 
@@ -41,6 +176,16 @@ sudo apt install vim git make build-essential libssl-dev zlib1g-dev libbz2-dev l
 **实际安装时将下面所写的python3.x替换为实际的具体版本即可**
 
 ---
+
+> **从官方下载源码压缩包**
+
+下载地址（可能会失效）：https://www.python.org/downloads/source/
+
+> **解压后并进入文件夹**
+
+```bash
+tar -xvzf Python3.x.tar.gz
+```
 
 >  **创建文件夹**
 
