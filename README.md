@@ -19,6 +19,7 @@
 | Git手册       | 记录Git中常用的操作、命令等                                  | [Git手册](./Git.md)             |
 | SMB手册       | 记录了在Linux环境下配置SMB服务器、客户端的过程及所使用的命令 | [SMB手册](./SMB.md)             |
 | WireGuard手册 | 记录了配置WireGuard VPN服务端节点和客户端节点的过程及所使用的命令 | [WireGuard手册](./WireGuard.md) |
+| WSL手册       | 记录了WSL中的一些使用、配置相关的命令以及相关的博客地址      | [WSL手册](./WSL.md)             |
 
 ### 工具使用
 
